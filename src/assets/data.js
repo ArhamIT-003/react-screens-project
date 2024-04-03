@@ -178,3 +178,151 @@ export const valverData = [
     adjudicado: false,
   },
 ];
+
+export const filterCardData = [
+  {
+    id: 1,
+    title: "WI-41415 : 10380001 CIRCUIT CARD ASSEMBLY, WESTINGH WCBS4N",
+    img: "https://assets.api.uizard.io/api/cdn/stream/ef8cd4e2-0965-4425-a5c2-156eedaec45c.png",
+    first: {
+      description:
+        "CIRCUIT CARD ASSEMBLY,WESTINGH WCBS4N ENS TJTA CIRCUITO,WESTINGH",
+      details: "WCBS4N Número de pieza: WCBS4N",
+      partNumber: "WCBS4N",
+    },
+    second: {
+      description: "MODULO,ENTRADA ANALOGA,CONTROLADOR LOGICO PROGRAMABLE",
+
+      partNumber: "SF3FBS4N",
+    },
+    third: {
+      name: "Processor,Gateway",
+      shortName: "Processor,Gateway",
+      type: "Profinet-IO",
+      numberofPorts: "2 pole",
+      voltageRating: "24V DC",
+      partNumber: "BD-SJ150",
+    },
+    assigned: {
+      email: "admin@gmail.com",
+    },
+    deliveryDate: "22-04-2024",
+    deadlineDate: "22-02-2024",
+    rfqDate: "22-01-2024",
+  },
+  {
+    id: 2,
+    title: "WI-41415 : 10380001 CIRCUIT CARD ASSEMBLY, WESTINGH WCBS4N",
+    img: "https://assets.api.uizard.io/api/cdn/stream/ef8cd4e2-0965-4425-a5c2-156eedaec45c.png",
+    first: {
+      description:
+        "CIRCUIT CARD ASSEMBLY,WESTINGH WCBS4N ENS TJTA CIRCUITO,WESTINGH",
+      details: "WCBS4N Número de pieza: WCBS4N",
+      partNumber: "WCBS4N",
+    },
+    second: {
+      description: "MODULO,ENTRADA ANALOGA,CONTROLADOR LOGICO PROGRAMABLE",
+
+      partNumber: "SF3FBS4N",
+    },
+    third: {
+      name: "Processor,Gateway",
+      shortName: "Processor,Gateway",
+      type: "Profinet-IO",
+      numberofPorts: "2 pole",
+      voltageRating: "24V DC",
+      partNumber: "BD-SJ150",
+    },
+    assigned: {},
+    deliveryDate: "22-02-2025",
+    deadlineDate: "22-03-2025",
+    rfqDate: "22-01-2025",
+  },
+  {
+    id: 3,
+    title: "WI-41415 : 10380001 CIRCUIT CARD ASSEMBLY, WESTINGH WCBS4N",
+    img: "https://assets.api.uizard.io/api/cdn/stream/ef8cd4e2-0965-4425-a5c2-156eedaec45c.png",
+    first: {
+      description:
+        "CIRCUIT CARD ASSEMBLY,WESTINGH WCBS4N ENS TJTA CIRCUITO,WESTINGH",
+      details: "WCBS4N Número de pieza: WCBS4N",
+      partNumber: "WCBS4N",
+    },
+    second: {
+      description: "MODULO,ENTRADA ANALOGA,CONTROLADOR LOGICO PROGRAMABLE",
+
+      partNumber: "SF3FBS4N",
+    },
+    third: {
+      name: "Processor,Gateway",
+      shortName: "Processor,Gateway",
+      type: "Profinet-IO",
+      numberofPorts: "2 pole",
+      voltageRating: "24V DC",
+      partNumber: "BD-SJ150",
+    },
+    assigned: {},
+    deliveryDate: "22-06-2024",
+    deadlineDate: "22-05-2025",
+    rfqDate: "22-03-2025",
+  },
+
+  {
+    id: 4,
+    title: "WI-41415 : 10380001 CIRCUIT CARD ASSEMBLY, WESTINGH WCBS4N",
+    img: "https://assets.api.uizard.io/api/cdn/stream/ef8cd4e2-0965-4425-a5c2-156eedaec45c.png",
+    first: {
+      description:
+        "CIRCUIT CARD ASSEMBLY,WESTINGH WCBS4N ENS TJTA CIRCUITO,WESTINGH",
+      details: "WCBS4N Número de pieza: WCBS4N",
+      partNumber: "WCBS4N",
+    },
+    second: {
+      description: "MODULO,ENTRADA ANALOGA,CONTROLADOR LOGICO PROGRAMABLE",
+
+      partNumber: "SF3FBS4N",
+    },
+    third: {
+      name: "Processor,Gateway",
+      shortName: "Processor,Gateway",
+      type: "Profinet-IO",
+      numberofPorts: "2 pole",
+      voltageRating: "24V DC",
+      partNumber: "BD-SJ150",
+    },
+    assigned: {},
+    deliveryDate: "22-06-2024",
+    deadlineDate: "22-05-2025",
+    rfqDate: "22-03-2025",
+  },
+  {
+    id: 5,
+    title: "WI-41415 : 10380001 CIRCUIT CARD ASSEMBLY, WESTINGH WCBS4N",
+    img: "https://assets.api.uizard.io/api/cdn/stream/ef8cd4e2-0965-4425-a5c2-156eedaec45c.png",
+    first: {
+      description:
+        "CIRCUIT CARD ASSEMBLY,WESTINGH WCBS4N ENS TJTA CIRCUITO,WESTINGH",
+      details: "WCBS4N Número de pieza: WCBS4N",
+      partNumber: "WCBS4N",
+    },
+    second: {
+      description: "MODULO,ENTRADA ANALOGA,CONTROLADOR LOGICO PROGRAMABLE",
+
+      partNumber: "SF3FBS4N",
+    },
+    third: {
+      name: "Processor,Gateway",
+      shortName: "Processor,Gateway",
+      type: "Profinet-IO",
+      numberofPorts: "2 pole",
+      voltageRating: "24V DC",
+      partNumber: "BD-SJ150",
+    },
+    assigned: {
+      email: "admin@gmail.com",
+    },
+    deliveryDate: "22-04-2024",
+    deadlineDate: "22-02-2024",
+    rfqDate: "22-01-2024",
+  },
+];

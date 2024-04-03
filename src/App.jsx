@@ -7,6 +7,7 @@ import SideBar from "./components/SideBar";
 // Import your pages
 import RFQs from "./pages/RFQs";
 import Valver from "./pages/Valver";
+import Home from "./pages/Home";
 
 const App = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -16,9 +17,9 @@ const App = () => {
       <Navbar isOpen={isOpen} setIsOpen={setIsOpen} />
       <div className="flex flex-1">
         {isOpen && <SideBar />}
-        <div className="flex-1 px-8">
+        <div className="w-full flex-[6] px-8">
           <Routes>
-            <Route path="/" element={<h1>Home page</h1>} />
+            <Route path="/" element={<Home />} />
             <Route path="/rfq" element={<RFQs />} />
             <Route path="/rfq/:id" element={<Valver />} />
           </Routes>

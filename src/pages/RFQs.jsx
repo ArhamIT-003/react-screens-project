@@ -4,8 +4,8 @@ import RFQDetails from "../components/RFQ-Details";
 
 const RFQs = () => {
   return (
-    <div className="mx-8 my-2 overflow-y-auto">
-      <div className="mb-2">
+    <div className="flex flex-col gap-4 mx-8 my-2 overflow-y-auto">
+      <div className="mt-4">
         <RFQCard />
       </div>
       {Data.map((item, index) => (

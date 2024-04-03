@@ -108,6 +108,25 @@ export const navLinks = [
   { name: "User Profile", path: "profile" },
 ];
 
+export const rfqManagerLinks = [
+  {
+    name: "View RFQs",
+    path: "/rfq-manager",
+  },
+  {
+    name: "Create RFQs",
+    path: "/rfq-manager/create",
+  },
+  {
+    name: "View Materials",
+    path: "/rfq-manager/view-material",
+  },
+  {
+    name: "User Settings",
+    path: "/rfq-manager/settings",
+  },
+];
+
 export const valverData = [
   {
     id: 1,
@@ -324,5 +343,34 @@ export const filterCardData = [
     deliveryDate: "22-04-2024",
     deadlineDate: "22-02-2024",
     rfqDate: "22-01-2024",
+  },
+];
+
+export const managerCardData = [
+  {
+    id: "1",
+    description: {
+      title:
+        "CIRCUIT CARD ASSEMBLY,WESTINGH WCBS4N ENS TJTA CIRCUITO,WESTINGH WCBS4N Número de pieza: WCBS4N",
+    },
+    partNumber: "WBCS4N",
+    cantidad: 2,
+    marca: "Siemens",
+    port: "running",
+  },
+  {
+    id: "2",
+    description: {
+      title: "",
+      shortName: "Interruptor,Electronico",
+      item1: "DiseÃ±o Ã“ Tipo Del Interruptor  DesalineaciÃ³n de la correa",
+      item2: "Datos ElÃ©ctricos Adicionales   4 SPDT,ROS &amp; SPS",
+      item3: "Datos Recinto De Interruptor   NEMA 4X",
+      item4: "CaracterÃ&shy;sticas Especiales     Aberturas de conductos MET",
+    },
+    partNumber: "WCBS4N",
+    cantidad: 10,
+    marca: "AB",
+    port: "pending",
   },
 ];

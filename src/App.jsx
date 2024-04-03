@@ -8,6 +8,7 @@ import SideBar from "./components/SideBar";
 import RFQs from "./pages/RFQs";
 import Valver from "./pages/Valver";
 import Home from "./pages/Home";
+import RFQManager from "./pages/RFQ-Manager";
 
 const App = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -21,6 +22,7 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/rfq" element={<RFQs />} />
+            <Route path="/rfq-manager" element={<RFQManager />} />
             <Route path="/rfq/:id" element={<Valver />} />
           </Routes>
         </div>

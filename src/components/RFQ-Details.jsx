@@ -12,7 +12,9 @@ const RFQDetails = ({ data }) => {
           <div className="flex justify-between">
             {rfqData.map((item, index) => (
               <div key={index}>
-                <h1 className="text-lg">{item.title}</h1>
+                <h1 className="text-lg tracking-wider text-balance font-normal">
+                  {item.title}
+                </h1>
                 <p className="text-xs text-gray-900">
                   <span className="text-xs text-gray-600">Port Number: </span>
                   {item.portNumber}

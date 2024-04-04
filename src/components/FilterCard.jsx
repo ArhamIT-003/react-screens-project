@@ -2,6 +2,7 @@ import cardImg from "../assets/card.png";
 import Avatar from "../assets/avatar.jpeg";
 import { useState } from "react";
 import View from "../pages/View";
+import { Link } from "react-router-dom";
 
 const FilterCard = ({ data }) => {
   const handleView = (id) => {
@@ -16,7 +17,10 @@ const FilterCard = ({ data }) => {
   };
 
   return (
-    <div className="border-2 border-gray-200 p-4 rounded-lg">
+    <Link
+      className="border-2 border-gray-200 p-4 rounded-lg"
+      to={"/rfq-manager"}
+    >
       <div className="flex gap-4 items-center justify-between">
         <div className="flex gap-6">
           <div className="border-2 border-gray-200 p-2 rounded-md ">
@@ -59,14 +63,14 @@ const FilterCard = ({ data }) => {
           >
             Quick View
           </button>
-          <button className="bg-blue-700 px-10 font-semibold py-2 rounded-md text-white text-xs capitalize">
+          <button className="bg-blue-700 px-10 font-normal py-2 rounded-md text-white text-xs capitalize">
             {data.assigned.email ? "Un Assign" : "Assign"}
           </button>
         </div>
         {/* Modal */}
         <View isOpen={isModalOpen} onClose={handleCloseModal} id={data.id} />
       </div>
-    </div>
+    </Link>
   );
 };
 

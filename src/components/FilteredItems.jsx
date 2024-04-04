@@ -21,7 +21,7 @@ const FilteredItems = () => {
   return (
     <div className="p-2">
       <h1 className="text-gray-900 font-semibold text-lg">
-        Materials Requested{" "}
+        Materials Requested
       </h1>
       <div className="flex flex-col gap-4">
         {currentItems.map((item, index) => (

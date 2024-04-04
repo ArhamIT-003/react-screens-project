@@ -23,7 +23,11 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
         <li key={page} className="mr-2">
           <button
             onClick={() => handleClick(page + 1)}
-            className={`w-8 h-8 text-xs rounded-full border border-gray-300 bg-blue-500 text-white hover:bg-gray-100 `}
+            className={`w-8 h-8 text-xs rounded-full border border-gray-300 ${
+              currentPage === page + 1
+                ? "bg-blue-600 text-white"
+                : "bg-white text-black hover:bg-gray-100"
+            }`}
           >
             {page + 1}
           </button>

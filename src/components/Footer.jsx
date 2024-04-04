@@ -16,27 +16,46 @@ const Footer = () => {
 
   return (
     <div className="h-10 w-full border-t border-gray-400">
-      {pathname === "/rfq" ||
-        (pathname === "/" && (
-          <div className="flex justify-between items-center px-8 py-2">
-            <div>
-              <p className="text-gray-400 text-sm font-semibold cursor-pointer flex gap-2 items-center">
-                <FaRegCopyright />
-                {year} RFQ Manager. All right reserved.
-              </p>
-            </div>
-            <div className="flex gap-4">
-              {footerLinks.map((item, index) => (
-                <p
-                  key={index}
-                  className="text-gray-400 text-sm font-semibold cursor-pointer"
-                >
-                  {item}
-                </p>
-              ))}
-            </div>
+      {pathname === "/" && (
+        <div className="flex justify-between items-center px-8 py-2">
+          <div>
+            <p className="text-gray-400 text-sm font-semibold cursor-pointer flex gap-2 items-center">
+              <FaRegCopyright />
+              {year} RFQ Manager. All right reserved.
+            </p>
           </div>
-        ))}
+          <div className="flex gap-4">
+            {footerLinks.map((item, index) => (
+              <p
+                key={index}
+                className="text-gray-400 text-sm font-semibold cursor-pointer"
+              >
+                {item}
+              </p>
+            ))}
+          </div>
+        </div>
+      )}
+      {pathname === "/rfq" && (
+        <div className="flex justify-between items-center px-8 py-2">
+          <div>
+            <p className="text-gray-400 text-sm font-semibold cursor-pointer flex gap-2 items-center">
+              <FaRegCopyright />
+              {year} RFQ Manager. All right reserved.
+            </p>
+          </div>
+          <div className="flex gap-4">
+            {footerLinks.map((item, index) => (
+              <p
+                key={index}
+                className="text-gray-400 text-sm font-semibold cursor-pointer"
+              >
+                {item}
+              </p>
+            ))}
+          </div>
+        </div>
+      )}
       {pathname === "/rfq-manager" && (
         <div className="flex items-center justify-around gap-4 pt-2">
           {managerLinks.map((item, index) => (

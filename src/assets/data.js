@@ -374,3 +374,16 @@ export const managerCardData = [
     port: "pending",
   },
 ];
+
+export const sideBarLinks = [
+  { icon: "CiHome", name: "Home", link: "/" },
+
+  { icon: "GrOverview", name: "Overview", link: "/overview" },
+  { icon: "BsCardChecklist", name: "Class List", link: "/class-list" },
+  { icon: "CgPerformance", name: "Performance", link: "/performance" },
+  { icon: "FaChalkboardTeacher", name: "Instructor", link: "/instructor" },
+  { icon: "GrNotes", name: "Notes", link: "/notes" },
+];
+
+// { icon: "", name: "RFQ Manager", link: "/rfq-manager" },
+//   { icon: "", name: "RFQ", link: "/rfq" },

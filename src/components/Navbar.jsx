@@ -1,6 +1,6 @@
 import { GiHamburgerMenu } from "react-icons/gi";
 import { Link, useLocation } from "react-router-dom";
-import { navLinks, rfqManagerLinks } from "../assets/data";
+import { rfqManagerLinks } from "../assets/data";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { AiOutlineMail } from "react-icons/ai";
 import { FaAngleDown } from "react-icons/fa6";
@@ -19,9 +19,9 @@ const Navbar = ({ isOpen, setIsOpen }) => {
     setIsDrop(!isDrop);
   };
 
-  const location = useLocation();
+  const { pathname } = useLocation();
 
-  const pathname = location.pathname;
+  let condition = pathname === "/" || pathname === "/rfq";
 
   return (
     <div className="h-12 w-full shadow-lg">
@@ -44,38 +44,42 @@ const Navbar = ({ isOpen, setIsOpen }) => {
           )}
         </div>
         <div className="flex gap-4">
-          {pathname === "/" && (
+          {condition && (
             <div className="flex items-center gap-4">
               <IoMdNotificationsOutline size={20} />
               <AiOutlineMail size={20} />
-              <div className="flex gap-4 items-center">
+              <div className="flex gap-4 items-center ml-5">
                 <img
                   src={Avatar}
                   alt="avatar-img"
-                  className="h-8 object-cover border-2 rounded-full border-black "
+                  className="h-8 object-cover border rounded-full border-black "
                 />
                 <span
-                  className="text-sm text-gray-900 flex items-center gap-2 cursor-pointer"
+                  className="text-sm text-gray-900 flex items-center gap-4 cursor-pointer"
                   onClick={handleDropDown}
                 >
-                  max@gmail.com{" "}
+                  max@gmail.com
                   <span>
                     <FaAngleDown />
                   </span>
                 </span>
                 {isDrop && (
-                  <div className="absolute top-9 right-4 bg-white border-2 border-black rounded-lg text-xs">
-                    <h1 className="hover:bg-gray-700 hover:text-white px-2 py-1 cursor-pointer">
-                      name: Glen Maxewell
-                    </h1>
-                    <p className="hover:bg-gray-700 hover:text-white px-2 py-1 cursor-pointer">
-                      Logout
-                    </p>
+                  <div className="absolute top-10 right-4 bg-white border border-gray-300 rounded-lg text-sm shadow-md w-48">
+                    <div className="p-2 hover:bg-gray-100 cursor-pointer">
+                      <h1 className="text-gray-800">Name: Glen Maxwell</h1>
+                    </div>
+                    <hr />
+                    <div className="p-2 hover:bg-gray-100 cursor-pointer">
+                      <h1 className="text-gray-800">Logout</h1>
+                    </div>
                   </div>
                 )}
               </div>
             </div>
           )}
+
+          {/*
+
           {pathname === "/rfq" &&
             navLinks.map((item, index) => (
               <Link
@@ -85,7 +89,7 @@ const Navbar = ({ isOpen, setIsOpen }) => {
               >
                 {item.name}
               </Link>
-            ))}
+            ))}*/}
           {pathname === "/rfq-manager" &&
             rfqManagerLinks.map((item, index) => (
               <Link

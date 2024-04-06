@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-const API_URL = process.env.REACT_APP_API_URL;
+const API_URL = import.meta.env.VITE_API_URL;
 
 const useRFQ = (token, rfqId) => {
   const [rfq, setRFQ] = useState(null);
@@ -25,3 +25,5 @@ const useRFQ = (token, rfqId) => {
 
   return rfq;
 }
+
+export default useRFQ;

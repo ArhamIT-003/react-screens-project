@@ -1,32 +1,54 @@
-// create an AuthContext and provide it to the app and make api calls to the server
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 import { loginUser, signupUser } from '../api/auth';
 
 const AuthContext = createContext();
 
 export const useAuth = () => {
-  return useContext(AuthContext);
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error('useAuth must be used within an AuthProvider');
+  }
+  return context;
 }
 
 const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(() => JSON.parse(localStorage.getItem('user')));
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    localStorage.setItem('user', JSON.stringify(user));
+  }, [user]);
 
   const login = async (email, password) => {
-    const response = await loginUser(email, password);
-    setUser(response.data);
+    setError(null);
+    try {
+      const response = await loginUser(email, password);
+      setUser(response.data);
+      return true;
+    } catch (error) {
+      setError('Login failed');
+      console.error('Login error:', error);
+      return false;
+    }
   }
 
   const signup = async (email, password, firstName, lastName) => {
-    const response = await signupUser(email, password, firstName, lastName);
-    setUser(response.data);
+    try {
+      const response = await signupUser(email, password, firstName, lastName);
+      setUser(response.data);
+    } catch (error) {
+      setError('Signup failed');
+      console.error('Signup error:', error);
+    }
   }
 
   const logout = () => {
     setUser(null);
+    localStorage.removeItem('user');
   }
 
   return (
-    <AuthContext.Provider value={{ user, login, signup, logout }}>
+    <AuthContext.Provider value={{ user, login, signup, logout, error }}>
       {children}
     </AuthContext.Provider>
   );

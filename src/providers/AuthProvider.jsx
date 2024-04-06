@@ -36,10 +36,15 @@ const AuthProvider = ({ children }) => {
     try {
       const response = await signupUser(email, password, firstName, lastName);
       setUser(response.data);
+      if (response.status === 201) {
+        await login(email, password);
+        return true;
+      }
     } catch (error) {
       setError('Signup failed');
       console.error('Signup error:', error);
     }
+    return false;
   }
 
   const logout = () => {

@@ -4,8 +4,6 @@ import { useState } from "react";
 import View from "../pages/View";
 import { Link } from "react-router-dom";
 
-const img = "https://assets.api.uizard.io/api/cdn/stream/ef8cd4e2-0965-4425-a5c2-156eedaec45c.png";
-
 const FilterCard = ({ data }) => {
   const handleView = (id) => {
     console.log("view", id);
@@ -19,11 +17,9 @@ const FilterCard = ({ data }) => {
   };
 
   return (
-    <Link
-      className="border-2 border-gray-200 p-4 rounded-lg"
-      to={"/rfq-manager"}
-    >
+    <div className="border-2 border-gray-200 p-4 rounded-lg">
       <div className="flex gap-4 items-center justify-between">
+      <Link to={'/rfq-manager'}>
         <div className="flex gap-6">
           <div className="border-2 border-gray-200 p-2 rounded-md ">
             <img src={cardImg} alt="" className="w-24 h-16 object-cover" />
@@ -41,6 +37,7 @@ const FilterCard = ({ data }) => {
             </div>
           </div>
         </div>
+        </Link>
         <div className="flex flex-col gap-2 max-w-fit justify-between items-center">
           {!data.User_id && (
             <>
@@ -70,9 +67,13 @@ const FilterCard = ({ data }) => {
           </button>
         </div>
         {/* Modal */}
-        <View isOpen={isModalOpen} onClose={handleCloseModal} id={data.RFQ_ID} />
+        <View
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+          id={data.RFQ_ID}
+        />
       </div>
-    </Link>
+    </div>
   );
 };
 

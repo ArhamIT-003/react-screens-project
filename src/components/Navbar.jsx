@@ -1,5 +1,5 @@
 import { GiHamburgerMenu } from "react-icons/gi";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { rfqManagerLinks } from "../assets/data";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { AiOutlineMail } from "react-icons/ai";
@@ -8,8 +8,12 @@ import Logo from "../assets/logo.png";
 import Avatar from "../assets/avatar.jpeg";
 import { useState } from "react";
 
+import { useAuth } from "../providers/AuthProvider";
+
 const Navbar = ({ isOpen, setIsOpen }) => {
   const [isDrop, setIsDrop] = useState(false);
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
 
   const handleClick = () => {
     setIsOpen(!isOpen);
@@ -17,6 +21,11 @@ const Navbar = ({ isOpen, setIsOpen }) => {
 
   const handleDropDown = () => {
     setIsDrop(!isDrop);
+  };
+
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
   };
 
   const { pathname } = useLocation();
@@ -58,7 +67,7 @@ const Navbar = ({ isOpen, setIsOpen }) => {
                   className="text-sm text-gray-900 flex items-center gap-4 cursor-pointer"
                   onClick={handleDropDown}
                 >
-                  max@gmail.com
+                  {user.email}
                   <span>
                     <FaAngleDown />
                   </span>
@@ -66,30 +75,17 @@ const Navbar = ({ isOpen, setIsOpen }) => {
                 {isDrop && (
                   <div className="absolute top-10 right-4 bg-white border border-gray-300 rounded-lg text-sm shadow-md w-48">
                     <div className="p-2 hover:bg-gray-100 cursor-pointer">
-                      <h1 className="text-gray-800">Name: Glen Maxwell</h1>
+                      <h1 className="text-gray-800">Name: {user.first_name + " " + user.last_name}</h1>
                     </div>
                     <hr />
                     <div className="p-2 hover:bg-gray-100 cursor-pointer">
-                      <h1 className="text-gray-800">Logout</h1>
+                      <button className="text-gray-800" onClick={handleLogout}>Logout</button>
                     </div>
                   </div>
                 )}
               </div>
             </div>
           )}
-
-          {/*
-
-          {pathname === "/rfq" &&
-            navLinks.map((item, index) => (
-              <Link
-                key={index}
-                to={item.path}
-                className="text-gray-600 text-sm font-normal cursor-pointer"
-              >
-                {item.name}
-              </Link>
-            ))}*/}
           {pathname === "/rfq-manager" &&
             rfqManagerLinks.map((item, index) => (
               <Link

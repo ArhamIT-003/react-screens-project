@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Modal from "../components/Modal";
 import { useAuth } from "../providers/AuthProvider";
 import useRFQ from "../hooks/useRFQ";
@@ -6,6 +6,23 @@ import useRFQ from "../hooks/useRFQ";
 const View = ({ isOpen, onClose, id }) => {
   const { user } = useAuth();
   const rfq = useRFQ(user.token, id);
+
+  // Effect to handle escape key press
+  useEffect(() => {
+    const handleEscape = (event) => {
+      if (event.key === 'Escape') {
+        onClose();  // Call onClose if the escape key is pressed
+      }
+    };
+
+    if (isOpen) {
+      window.addEventListener('keydown', handleEscape);
+    }
+
+    return () => {
+      window.removeEventListener('keydown', handleEscape);
+    };
+  }, [isOpen, onClose]);  // Dependencies include isOpen to set and clean up the listener based on the modal state
 
   // Conditional rendering based on the fetched data
   if (!rfq) {

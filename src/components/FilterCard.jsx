@@ -46,11 +46,9 @@ const FilterCard = ({ data }) => {
         </Link>
         <div className="flex flex-col gap-2 max-w-fit justify-between items-center">
           {!data.User_id && (
-            <>
-              <button className="bg-blue-700 px-8 py-2 rounded-md text-white text-xs uppercase">
-                Reservar
-              </button>
-            </>
+            <button className="bg-blue-700 w-32 py-2 rounded-md text-white text-xs uppercase whitespace-nowrap">
+              Reservar
+            </button>
           )}
           {data.User_id && (
             <div className="flex items-center gap-2">
@@ -63,12 +61,12 @@ const FilterCard = ({ data }) => {
             </div>
           )}
           <button
-            className="bg-blue-700 px-7 py-2 rounded-md text-white text-xs uppercase"
+            className="bg-blue-700 w-32 py-2 rounded-md text-white text-xs uppercase whitespace-nowrap"
             onClick={() => handleView(data.RFQ_ID)}
           >
             Quick View
           </button>
-          <button className="bg-blue-700 px-10 font-normal py-2 rounded-md text-white text-xs capitalize">
+          <button className="bg-blue-700 w-32 py-2 rounded-md text-white text-xs capitalize whitespace-nowrap">
             {data.User_id ? "Release" : "Assign"}
           </button>
         </div>

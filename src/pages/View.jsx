@@ -1,93 +1,59 @@
-import { useMemo } from "react";
-import { filterCardData } from "../assets/data";
+import React from "react";
 import Modal from "../components/Modal";
+import { useAuth } from "../providers/AuthProvider";
+import useRFQ from "../hooks/useRFQ";
 
 const View = ({ isOpen, onClose, id }) => {
-  console.log(id);
+  const { user } = useAuth();
+  const rfq = useRFQ(user.token, id);
 
-  const foundData = useMemo(
-    () => filterCardData.find((item) => item.id === id),
-    [id]
-  );
+  // Conditional rendering based on the fetched data
+  if (!rfq) {
+    // Show loading state if no RFQ data is available yet
+    return (
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <div className="flex justify-center items-center p-5">
+          <p>Loading...</p>
+        </div>
+      </Modal>
+    );
+  }
 
-  console.log(foundData);
+  // Render the component if data is available
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <div className="space-y-8">
         {/*Heading Container*/}
         <div className="flex gap-4 items-center">
-          <div className="">
+          <div>
             <img
-              src={foundData.img}
+              src={"https://assets.api.uizard.io/api/cdn/stream/ef8cd4e2-0965-4425-a5c2-156eedaec45c.png"}
               alt="view-img"
               className="w-24 h-16 object-cover rounded-lg"
             />
           </div>
           <h1 className="w-[60%] text-black text-base font-normal">
-            {foundData.title}
+            {rfq.RFQ_Name}
           </h1>
         </div>
-        {/*Description Container 1*/}
-        <div className="space-y-4">
-          <h1 className="text-base font-medium text-black">
-            LINER,WEAR,NONMTL,PL,CARB
-          </h1>
-          <p className="text-xs text-gray-500 capitalize">
-            Part Number:{" "}
-            <span className="text-xs text-black">
-              {foundData.first.partNumber}
-            </span>
-          </p>
-          <div>
-            <p className="text-xs text-gray-500">
-              {foundData.first.description}
+        {/*Description Containers*/}
+        {rfq.materials && rfq.materials.map((material, index) => (
+          <div className="space-y-4" key={index}>
+            <h1 className="text-base font-medium text-black">
+              {material.Part_Number}
+            </h1>
+            <p className="text-xs text-gray-500 capitalize">
+              Part Number: <span className="text-xs text-black">{material.Part_Number}</span>
             </p>
-            <p className="text-xs text-gray-500">{foundData.first.details}</p>
+            <div>
+              <p className="text-xs text-gray-500">{material.Material_Description}</p>
+              <p className="text-xs text-gray-500">{material.Notes}</p>
+              <p className="text-xs text-gray-500">
+                Quantity Required: {material.Quantity_Required}
+              </p>
+            </div>
           </div>
-        </div>
-        {/*Description Container 2*/}
-        <div className="space-y-4">
-          <h1 className="text-base font-medium text-black">
-            MODULE,A/I,PLC,GE IC693ALG220
-          </h1>
-          <p className="text-xs text-gray-500 capitalize">
-            Part Number:{" "}
-            <span className="text-xs text-black">
-              {foundData.second.partNumber}
-            </span>
-          </p>
-          <div>
-            <p className="text-xs text-gray-500">
-              {foundData.second.description}
-            </p>
-          </div>
-        </div>
-        {/*Description Container 3*/}
-        <div className="space-y-4">
-          <h1 className="text-base font-medium text-black">
-            PROCESSOR,GATEWAY,PROFINET-IO,2 P,24V DC
-          </h1>
-          <p className="text-xs text-gray-500 capitalize pb-2">
-            Part Number:{" "}
-            <span className="text-xs text-black">
-              {foundData.third.partNumber}
-            </span>
-          </p>
-          <div className="">
-            <p className="text-xs text-gray-500">{foundData.third.name}</p>
-            <p className="text-xs text-gray-500">
-              Short Name {foundData.third.shortName}
-            </p>
-            <p className="text-xs text-gray-500">Type {foundData.third.type}</p>
-            <p className="text-xs text-gray-500">
-              Number of ports {foundData.third.numberofPorts}
-            </p>
-            <p className="text-xs text-gray-500">
-              Voltage rating {foundData.third.voltageRating}
-            </p>
-          </div>
-        </div>
-
+        ))}
         <div className="flex items-center justify-center gap-6 pb-5">
           <button className="bg-none border border-blue-500 px-8 py-2 text-blue-500 font-normal capitalize rounded-md">
             Siguiente

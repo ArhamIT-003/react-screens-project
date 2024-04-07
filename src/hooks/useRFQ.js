@@ -18,7 +18,7 @@ const useRFQ = (token, rfqId) => {
       }
     };
 
-    if (token) {
+    if (token && rfqId) {
       fetchRFQ();
     }
   }, [token, rfqId]);

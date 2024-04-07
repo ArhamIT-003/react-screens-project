@@ -1,5 +1,6 @@
-import { useState } from "react";
-import { filterCardData } from "../assets/data";
+import React, { useState } from "react";
+import { useAuth } from "../providers/AuthProvider";
+import useRFQs from "../hooks/useRFQs";
 import FilterCard from "./FilterCard";
 import Pagination from "./Pagination";
 
@@ -7,12 +8,12 @@ const ITEMS_PER_PAGE = 3;
 
 const FilteredItems = () => {
   const [currentPage, setCurrentPage] = useState(1);
+  const { user } = useAuth();
 
-  const indexOfLastItem = currentPage * ITEMS_PER_PAGE;
-  const indexofFirstItem = indexOfLastItem - ITEMS_PER_PAGE;
-  const currentItems = filterCardData.slice(indexofFirstItem, indexOfLastItem);
-
-  const totalPages = Math.ceil(filterCardData.length / ITEMS_PER_PAGE);
+  // Fetch RFQs using the custom hook
+  const rfqs = useRFQs(user.token, currentPage, ITEMS_PER_PAGE);
+  const totalRFQs = rfqs?.length || 0;
+  const totalPages = Math.ceil(totalRFQs / ITEMS_PER_PAGE);
 
   const onPageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -20,21 +21,18 @@ const FilteredItems = () => {
 
   return (
     <div className="p-2">
-      <h1 className="text-gray-900 font-semibold text-lg">
-        Materials Requested
-      </h1>
+      <h1 className="text-gray-900 font-semibold text-lg">Materials Requested</h1>
       <div className="flex flex-col gap-4">
-        {currentItems.map((item, index) => (
-          <FilterCard key={index} data={item} />
+        {rfqs && rfqs.map((rfq, index) => (
+          <FilterCard key={index} data={rfq} />
         ))}
+        {!rfqs && <p>Loading RFQs...</p>}
       </div>
-      <div>
-        <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={onPageChange}
-        />
-      </div>
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={onPageChange}
+      />
     </div>
   );
 };

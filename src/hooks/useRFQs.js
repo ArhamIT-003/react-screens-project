@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
-const useRFQs = (token) => {
+const useRFQs = (token, page = 1, n = 3) => {
   const [rfqs, setRFQs] = useState(null);
-
+  
   useEffect(() => {
     const fetchRFQs = async () => {
       try {
-        const response = await axios.get(`${API_URL}/rfqs/`, {
+        const response = await axios.get(`${API_URL}/rfqs/?page=${page}&n=${n}`, {
           headers: { Authorization: `Token ${token}` },
         });
         setRFQs(response.data);
@@ -21,7 +21,7 @@ const useRFQs = (token) => {
     if (token) {
       fetchRFQs();
     }
-  }, [token]);
+  }, [token, page, n]); // Make sure to react to changes in `page` and `n` as well.
 
   return rfqs;
 };

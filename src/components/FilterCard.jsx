@@ -4,11 +4,17 @@ import { useState } from "react";
 import View from "../pages/View";
 import { Link } from "react-router-dom";
 
+import useUser from "../hooks/useUser";
+import { useAuth } from "../providers/AuthProvider";
+
 const FilterCard = ({ data }) => {
+  const { user } = useAuth();
   const handleView = (id) => {
     console.log("view", id);
     setIsModalOpen(true);
   };
+
+  const rfqAssignee = useUser(user.token, data.User_id);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -48,7 +54,7 @@ const FilterCard = ({ data }) => {
           )}
           {data.User_id && (
             <div className="flex items-center gap-2">
-              <p className="text-xs">{data.User_id}</p>
+              <p className="text-xs">{rfqAssignee ? rfqAssignee.first_name : "loading..."}</p>
               <img
                 src={Avatar}
                 alt=""

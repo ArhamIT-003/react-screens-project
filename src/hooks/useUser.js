@@ -3,11 +3,11 @@ import axios from "axios";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
-const useUser = (token, userId) => {
+export const getUser = (token, userId) => {
   const [user, setUser] = useState(null);
   
   useEffect(() => {
-    console.log("useUser", token, userId);
+    console.log("getUser", token, userId);
     const fetchUser = async () => {
       try {
         const response = await axios.get(`${API_URL}/user/?user_id=${userId}`, {
@@ -26,5 +26,3 @@ const useUser = (token, userId) => {
 
   return user;
 };
-
-export default useUser;

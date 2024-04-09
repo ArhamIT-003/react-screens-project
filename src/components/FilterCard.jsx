@@ -4,7 +4,7 @@ import { useState } from "react";
 import View from "../pages/View";
 import { Link } from "react-router-dom";
 
-import useUser from "../hooks/useUser";
+import { getUser } from "../hooks/useUser";
 import { useAuth } from "../providers/AuthProvider";
 
 const FilterCard = ({ data }) => {
@@ -14,7 +14,7 @@ const FilterCard = ({ data }) => {
     setIsModalOpen(true);
   };
 
-  const rfqAssignee = useUser(user.token, data.User_id);
+  const rfqAssignee = getUser(user.token, data.User_id);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 

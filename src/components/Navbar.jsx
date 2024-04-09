@@ -29,7 +29,6 @@ const Navbar = ({ isOpen, setIsOpen }) => {
   };
 
   const { pathname } = useLocation();
-
   let condition = pathname === "/" || pathname === "/rfq";
 
   return (
@@ -39,38 +38,20 @@ const Navbar = ({ isOpen, setIsOpen }) => {
           <div className="cursor-pointer" onClick={handleClick}>
             <GiHamburgerMenu size={20} />
           </div>
-          {pathname === "/" && (
-            <div className="w-full flex items-center">
-              <img src={Logo} alt="" className="h-8 object-cover" />
-            </div>
-          )}
-          {pathname === "/rfq" && (
-            <h2 className="font-semibold text-xl">RFQ</h2>
-          )}
-
-          {pathname === "/rfq-manager" && (
-            <h2 className="font-semibold text-xl">RFQ Manager</h2>
-          )}
+          {pathname === "/" && <img src={Logo} alt="" className="h-8 object-cover" />}
+          {pathname === "/rfq" && <h2 className="font-semibold text-xl">RFQ</h2>}
+          {pathname === "/rfq-manager" && <h2 className="font-semibold text-xl">RFQ Manager</h2>}
         </div>
         <div className="flex gap-4">
-          {condition && (
+          {condition && user && (
             <div className="flex items-center gap-4">
               <IoMdNotificationsOutline size={20} />
               <AiOutlineMail size={20} />
               <div className="flex gap-4 items-center ml-5">
-                <img
-                  src={Avatar}
-                  alt="avatar-img"
-                  className="h-8 object-cover border rounded-full border-black "
-                />
-                <span
-                  className="text-sm text-gray-900 flex items-center gap-4 cursor-pointer"
-                  onClick={handleDropDown}
-                >
+                <img src={Avatar} alt="avatar-img" className="h-8 object-cover border rounded-full border-black" />
+                <span className="text-sm text-gray-900 flex items-center gap-4 cursor-pointer" onClick={handleDropDown}>
                   {user.email}
-                  <span>
-                    <FaAngleDown />
-                  </span>
+                  <FaAngleDown />
                 </span>
                 {isDrop && (
                   <div className="absolute top-10 right-4 bg-white border border-gray-300 rounded-lg text-sm shadow-md w-48">
@@ -78,8 +59,8 @@ const Navbar = ({ isOpen, setIsOpen }) => {
                       <h1 className="text-gray-800">Name: {user.first_name + " " + user.last_name}</h1>
                     </div>
                     <hr />
-                    <div className="p-2 hover:bg-gray-100 cursor-pointer">
-                      <button className="text-gray-800" onClick={handleLogout}>Logout</button>
+                    <div className="p-2 hover:bg-gray-100 cursor-pointer" onClick={handleLogout}>
+                      <button className="text-gray-800">Logout</button>
                     </div>
                   </div>
                 )}
@@ -88,11 +69,7 @@ const Navbar = ({ isOpen, setIsOpen }) => {
           )}
           {pathname === "/rfq-manager" &&
             rfqManagerLinks.map((item, index) => (
-              <Link
-                key={index}
-                to={item.path}
-                className="text-gray-600 text-sm font-normal cursor-pointer"
-              >
+              <Link key={index} to={item.path} className="text-gray-600 text-sm font-normal cursor-pointer">
                 {item.name}
               </Link>
             ))}
@@ -103,3 +80,4 @@ const Navbar = ({ isOpen, setIsOpen }) => {
 };
 
 export default Navbar;
+

@@ -13,11 +13,13 @@ import Overview from "./pages/Overview";
 import Instructor from "./pages/Instructor";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
+import ProtectedRoute from "./pages/ProtectedRoute";
 
 const App = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { pathname } = useLocation();
   const conditions = pathname === "/login" || pathname === "/signup";
+
   return (
     <div className="h-screen flex flex-col relative ease-out transition-all ">
       {!conditions && <Navbar isOpen={isOpen} setIsOpen={setIsOpen} />}
@@ -25,20 +27,61 @@ const App = () => {
         {isOpen && <SideBar isOpen={isOpen} setOpen={setIsOpen} />}
         <div className={`w-full flex-[8] px-8 ${isOpen ? "ml-52" : ""}`}>
           <Routes>
-            <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
-            <Route path="/rfq" element={<RFQs />} />
-            <Route path="/rfq-manager" element={<RFQManager />} />
-            <Route path="/overview" element={<Overview />} />
-            <Route path="/Instructor" element={<Instructor />} />
-            <Route path="/rfq/:id" element={<Valver />} />
+            <Route
+              path="/"
+              element={
+                <ProtectedRoute>
+                  <Home />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route
+              path="/rfq"
+              element={
+                <ProtectedRoute>
+                  <RFQs />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/rfq-manager"
+              element={
+                <ProtectedRoute>
+                  <RFQManager />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/overview"
+              element={
+                <ProtectedRoute>
+                  <Overview />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/Instructor"
+              element={
+                <ProtectedRoute>
+                  <Instructor />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/rfq/:id"
+              element={
+                <ProtectedRoute>
+                  <Valver />
+                </ProtectedRoute>
+              }
+            />
           </Routes>
         </div>
       </div>
-      <div>
-        <Footer />
-      </div>
+      <Footer />
     </div>
   );
 };

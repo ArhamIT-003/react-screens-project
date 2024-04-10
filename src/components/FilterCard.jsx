@@ -1,10 +1,12 @@
+import React, { useState, useEffect } from "react";
 import cardImg from "../assets/card.png";
 import Avatar from "../assets/avatar.jpeg";
-import { useState } from "react";
 import View from "../pages/View";
 import { Link } from "react-router-dom";
+import DropdownArrow from "../assets/down-arrow.svg";
 
-import { getUser } from "../hooks/useUser";
+import { getUser, getUsers } from "../hooks/useUser";
+import { reserveRFQ, assignRFQ, releaseRFQ } from "../hooks/useRFQ";
 import { useAuth } from "../providers/AuthProvider";
 
 const FilterCard = ({ data }) => {
@@ -14,6 +16,12 @@ const FilterCard = ({ data }) => {
     setIsModalOpen(true);
   };
 
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  // const [users, setUsers] = useState([]);
+
+  // Function to fetch users
+  const users = getUsers(user);
+
   const rfqAssignee = getUser(user.token, data.User_id);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -22,37 +30,60 @@ const FilterCard = ({ data }) => {
     setIsModalOpen(false);
   };
 
+  const handleReserve = () => {
+    console.log("reserve", data.RFQ_ID);
+    reserveRFQ(user.token, data.RFQ_ID);
+  };
+
+  const handleRelease = () => {
+    releaseRFQ(user.token, data.RFQ_ID);
+  };
+
+  const handleAssignToUser = (userId) => {
+    assignRFQ(user.token, data.RFQ_ID, userId);
+    setIsDropdownOpen(false); // Close the dropdown after assignment
+  };
+
   return (
     <div className="border-2 border-gray-200 p-4 rounded-lg">
       <div className="flex gap-4 items-center justify-between">
-      <Link to={'/rfq-manager'}>
-        <div className="flex gap-6">
-          <div className="border-2 border-gray-200 p-2 rounded-md ">
-            <img src={cardImg} alt="" className="w-24 h-16 object-cover" />
-          </div>
-          <div className="space-y-6">
-            <h1 className="text-black font-normal text-lg">{data.RFQ_Name}</h1>
-            <div className="flex gap-8 items-center justify-center">
-              <p className="text-xs text-gray-400 pr-4 border-r-2 border-gray-300">
-                Deadline: {data.Deadline}
-              </p>
-              <p className="text-xs text-gray-400 pr-4 border-r-2 border-gray-300">
-                Delivery Date: {data.Delivery_Date}
-              </p>
-              <p className="text-xs text-gray-400">RFQ Date: {data.RFQ_Date}</p>
+        <Link to={"/rfq-manager"}>
+          <div className="flex gap-6">
+            <div className="border-2 border-gray-200 p-2 rounded-md ">
+              <img src={cardImg} alt="" className="w-24 h-16 object-cover" />
+            </div>
+            <div className="space-y-6">
+              <h1 className="text-black font-normal text-lg">
+                {data.RFQ_Name}
+              </h1>
+              <div className="flex gap-8 items-center justify-center">
+                <p className="text-xs text-gray-400 pr-4 border-r-2 border-gray-300">
+                  Deadline: {data.Deadline}
+                </p>
+                <p className="text-xs text-gray-400 pr-4 border-r-2 border-gray-300">
+                  Delivery Date: {data.Delivery_Date}
+                </p>
+                <p className="text-xs text-gray-400">
+                  RFQ Date: {data.RFQ_Date}
+                </p>
+              </div>
             </div>
           </div>
-        </div>
         </Link>
         <div className="flex flex-col gap-2 max-w-fit justify-between items-center">
           {!data.User_id && (
-            <button className="bg-blue-700 w-32 py-2 rounded-md text-white text-xs uppercase whitespace-nowrap">
+            <button
+              className="bg-blue-700 w-32 py-2 rounded-md text-white text-xs uppercase whitespace-nowrap"
+              onClick={handleReserve}
+            >
               Reservar
             </button>
           )}
           {data.User_id && (
             <div className="flex items-center gap-2">
-              <p className="text-xs">{rfqAssignee ? rfqAssignee.first_name : "loading..."}</p>
+              <p className="text-xs">
+                {rfqAssignee ? rfqAssignee.first_name : "loading..."}
+              </p>
               <img
                 src={Avatar}
                 alt=""
@@ -66,9 +97,38 @@ const FilterCard = ({ data }) => {
           >
             Quick View
           </button>
-          <button className="bg-blue-700 w-32 py-2 rounded-md text-white text-xs capitalize whitespace-nowrap">
-            {data.User_id ? "Release" : "Assign"}
-          </button>
+          {data.User_id && (
+            <button
+              className="bg-blue-700 w-32 py-2 rounded-md text-white text-xs capitalize whitespace-nowrap"
+              onClick={handleRelease}
+            >
+              Release
+            </button>
+          )}
+          {!data.User_id && user.is_staff && (
+            <div className="relative">
+              <button
+                className="bg-blue-700 w-32 py-2 rounded-md text-white text-xs capitalize whitespace-nowrap flex items-center justify-between"
+                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+              >
+                Assign
+                <img src={DropdownArrow} alt="Dropdown" className="ml-2" />
+              </button>
+              {isDropdownOpen && (
+                <ul className="absolute bg-white border border-gray-300 rounded-md mt-1 z-10">
+                  {users.map((user) => (
+                    <li
+                      key={user.id}
+                      className="p-2 hover:bg-gray-100 cursor-pointer"
+                      onClick={() => handleAssignToUser(user.id)}
+                    >
+                      {user.first_name} {user.last_name}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          )}
         </div>
         {/* Modal */}
         <View

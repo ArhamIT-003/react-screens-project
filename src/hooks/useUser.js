@@ -26,3 +26,29 @@ export const getUser = (token, userId) => {
 
   return user;
 };
+
+export const getUsers = (user) => {
+  const [users, setUsers] = useState(null);
+  if (!user.is_staff) {
+    return users;
+  }
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const response = await axios.get(`${API_URL}/users/`, {
+          headers: { Authorization: `Token ${user.token}` },
+        });
+        setUsers(response.data);
+      } catch (error) {
+        console.error("Failed to fetch users:", error);
+      }
+    };
+
+    if (user.token) {
+      fetchUsers();
+    }
+  }, [user.token]);
+
+  return users;
+};

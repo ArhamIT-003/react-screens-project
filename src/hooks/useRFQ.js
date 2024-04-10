@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
-const useRFQ = (token, rfqId) => {
+export const getRFQ = (token, rfqId) => {
   const [rfq, setRFQ] = useState(null);
 
   useEffect(() => {
@@ -26,4 +26,65 @@ const useRFQ = (token, rfqId) => {
   return rfq;
 }
 
-export default useRFQ;
+export const getRFQs = (token, page = 1, n = 3) => {
+  const [rfqs, setRFQs] = useState(null);
+  
+  useEffect(() => {
+    const fetchRFQs = async () => {
+      try {
+        const response = await axios.get(`${API_URL}/rfqs/?page=${page}&n=${n}`, {
+          headers: { Authorization: `Token ${token}` },
+        });
+        setRFQs(response.data);
+      } catch (error) {
+        console.error('Failed to fetch RFQs:', error);
+      }
+    };
+
+    if (token) {
+      fetchRFQs();
+    }
+  }, [token, page, n]); // Make sure to react to changes in `page` and `n` as well.
+
+  return rfqs;
+};
+
+export const releaseRFQ = async (token, rfqId) => {
+  try {
+    const response = await axios.post(`${API_URL}/rfq/release/`, {
+      rfq_id: rfqId
+    }, {
+      headers: { Authorization: `Token ${token}` },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Failed to release RFQ:', error);
+  }
+}
+
+export const reserveRFQ = async (token, rfqId) => {
+  try {
+    const response = await axios.post(`${API_URL}/rfq/reserve/`, {
+      rfq_id: rfqId
+    }, {
+      headers: { Authorization: `Token ${token}` },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Failed to reserve RFQ:', error);
+  }
+}
+
+export const assignRFQ = async (token, rfqId, userId) => {
+  try {
+    const response = await axios.post(`${API_URL}/rfq/assign/`, {
+      rfq_id: rfqId,
+      user_id: userId,
+    }, {
+      headers: { Authorization: `Token ${token}` },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Failed to assign RFQ:', error);
+  }
+}

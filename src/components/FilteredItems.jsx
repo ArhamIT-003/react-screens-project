@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useAuth } from "../providers/AuthProvider";
-import useRFQs from "../hooks/useRFQs";
+import { getRFQs } from "../hooks/useRFQ";
 import FilterCard from "./FilterCard";
 import Pagination from "./Pagination";
 
@@ -11,7 +11,7 @@ const FilteredItems = () => {
   const { user } = useAuth();
 
   // Fetch RFQs using the custom hook
-  const rfqs = useRFQs(user.token, currentPage, ITEMS_PER_PAGE);
+  const rfqs = getRFQs(user.token, currentPage, ITEMS_PER_PAGE);
   const totalRFQs = rfqs?.length || 0;
   const totalPages = Math.ceil(totalRFQs / ITEMS_PER_PAGE);
 

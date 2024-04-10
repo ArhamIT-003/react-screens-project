@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import Modal from "../components/Modal";
 import { useAuth } from "../providers/AuthProvider";
-import useRFQ from "../hooks/useRFQ";
+import { getRFQ } from "../hooks/useRFQ";
 
 const View = ({ isOpen, onClose, id }) => {
   const { user } = useAuth();
-  const rfq = useRFQ(user.token, id);
+  const rfq = getRFQ(user.token, id);
 
   // Effect to handle escape key press
   useEffect(() => {

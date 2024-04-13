@@ -1,40 +1,60 @@
 import axios from "axios";
 import { useState } from "react";
+import { useAuth } from "../providers/AuthProvider";
+
+import { getFilteredRFQs } from "../hooks/useRFQ";
 
 const Filter = () => {
+  const { user } = useAuth();
   const [filterData, setFilterData] = useState({
-    cliente: "",
-    fetchaRFQ: "",
-    deadlineDate: "",
-    deliveryDate: "",
-    vigente: false,
-    reservada: false,
-    parte: false,
-    vendido: false,
-    ofertado: false,
+    Company_Name: "",
+    RFQ_Date: "",
+    Deadline: "",
+    Delivery_Date: "",
+    new_status: "", // single field to represent the status
   });
 
   const handleInputChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setFilterData((prevData) => ({
-      ...prevData,
-      [name]: type === "checkbox" ? checked : value,
-    }));
+    const { name, value, type } = e.target;
+    setFilterData((prevData) => {
+      // If the input is a radio button, we want to update the new_status field
+      if (type === "radio" && e.target.checked) {
+        return {
+          ...prevData,
+          new_status: value,
+        };
+      }
+      // For other inputs, handle as before
+      return {
+        ...prevData,
+        [name]: value,
+      };
+    });
   };
 
   const handleFilterSubmit = () => {
     // Send a request to your API endpoint with the filterData
-    axios
-      .post("/api/filter", filterData)
-      .then((response) => {
-        // Handle the response data here
-        console.log(response.data);
-      })
-      .catch((error) => {
-        // Handle error
-        console.error("Error filtering data:", error);
-      });
+    console.log("Filter data:", filterData);
+    const filteredRFQs = getFilteredRFQs(user.token, filterData);
+    console.log("Filtered RFQs:", filteredRFQs)
   };
+
+  const handleClear = () => {
+    setFilterData({
+      Company_Name: "",
+      RFQ_Date: "",
+      Deadline: "",
+      Delivery_Date: "",
+      new_status: "", // single field to represent the status
+    });
+    reloadComponent();
+  };
+
+  const reloadComponent = () => {
+    // Reload the component here
+    window.location.reload();
+  };
+
   return (
     <div className="flex-1 p-4">
       <div className="flex flex-col gap-2">
@@ -43,10 +63,11 @@ const Filter = () => {
         <div>
           <div className="m-1">
             <label htmlFor="" className="text-xs text-gray-600">
-              Cliente
+              Company
             </label>
             <input
               type="text"
+              name="Company_Name"
               className="border-2 border-gray-300 w-full mt-1 px-2 rounded-lg outline-none placeholder:text-sm"
               placeholder="ABC Company"
               onChange={handleInputChange}
@@ -54,10 +75,11 @@ const Filter = () => {
           </div>
           <div className="m-1">
             <label htmlFor="" className="text-xs text-gray-600">
-              Fetcha RFQ
+              RFQ Fetch Date
             </label>
             <input
               type="date"
+              name="RFQ_Date"
               className="border-2 border-gray-300 text-gray-400 text-sm w-full mt-2 px-2 rounded-lg outline-none"
               onChange={handleInputChange}
             />
@@ -68,6 +90,7 @@ const Filter = () => {
             </label>
             <input
               type="date"
+              name="Deadline"
               className="border-2 border-gray-300 text-gray-400 text-sm w-full mt-2 px-2 rounded-lg outline-none"
               onChange={handleInputChange}
             />
@@ -78,6 +101,7 @@ const Filter = () => {
             </label>
             <input
               type="date"
+              name="Delivery_Date"
               className="border-2 border-gray-300 text-gray-400 text-sm w-full mt-2 px-2 rounded-lg outline-none"
               onChange={handleInputChange}
             />
@@ -86,7 +110,10 @@ const Filter = () => {
         {/*Filter selection*/}
         <div className="flex items-center justify-between">
           <h1 className="text-black text-lg font-normal">Opciones</h1>
-          <p className="text-xs font-normal text-gray-400 cursor-pointer">
+          <p
+            className="text-xs font-normal text-gray-400 cursor-pointer"
+            onClick={handleClear}
+          >
             Clear
           </p>
         </div>
@@ -94,57 +121,61 @@ const Filter = () => {
         <div className="space-y-4 my-2">
           <div className="flex items-center gap-10">
             <input
-              type="checkbox"
-              className="w-4 h-4"
-              id="vigente"
+              type="radio"
+              name="new_status"
+              value="new"
+              checked={filterData.new_status === "new"}
               onChange={handleInputChange}
+              className="w-4 h-4"
+              id="new"
             />
-            <label htmlFor="vigente" className="text-xs text-gray-600">
-              Vigente
+            <label htmlFor="new" className="text-xs text-gray-600">
+              New
             </label>
           </div>
+
           <div className="flex items-center gap-10">
             <input
-              type="checkbox"
-              className="w-4 h-4"
-              id="reservada"
+              type="radio"
+              name="new_status"
+              value="reserved"
+              checked={filterData.new_status === "reserved"}
               onChange={handleInputChange}
+              className="w-4 h-4"
+              id="reserved"
             />
-            <label htmlFor="reservada" className="text-xs text-gray-600">
-              No reservada
+            <label htmlFor="reserved" className="text-xs text-gray-600">
+              Reserved
             </label>
           </div>
+
           <div className="flex items-center gap-10">
             <input
-              type="checkbox"
-              className="w-4 h-4"
-              id="parte"
+              type="radio"
+              name="new_status"
+              value="sold"
+              checked={filterData.new_status === "sold"}
               onChange={handleInputChange}
+              className="w-4 h-4"
+              id="sold"
             />
-            <label htmlFor="parte" className="text-xs text-gray-600">
-              Numero de Parte
+            <label htmlFor="sold" className="text-xs text-gray-600">
+              Sold
             </label>
           </div>
+
           <div className="flex items-center gap-10">
             <input
-              type="checkbox"
-              className="w-4 h-4"
-              id="vendido"
+              type="radio"
+              name="new_status"
+              value="offered"
+              checked={filterData.new_status === "offered"}
               onChange={handleInputChange}
-            />
-            <label htmlFor="vendido" className="text-xs text-gray-600">
-              Vendido
-            </label>
-          </div>
-          <div className="flex items-center gap-10">
-            <input
-              type="checkbox"
               className="w-4 h-4"
-              id="ofertado"
-              onChange={handleInputChange}
+              id="offered"
             />
-            <label htmlFor="ofertado" className="text-xs text-gray-600">
-              Ofertado
+            <label htmlFor="offered" className="text-xs text-gray-600">
+              Offered
             </label>
           </div>
         </div>

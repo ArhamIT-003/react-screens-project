@@ -88,3 +88,26 @@ export const assignRFQ = async (token, rfqId, userId) => {
     console.error('Failed to assign RFQ:', error);
   }
 }
+
+export const getFilteredRFQs = (token, filterData) => {
+  const [rfqs, setRFQs] = useState(null);
+
+  useEffect(() => {
+    const fetchFilteredRFQs = async () => {
+      try {
+        const response = await axios.post(`${API_URL}/rfqs/filter/`, filterData, {
+          headers: { Authorization: `Token ${token}` },
+        });
+        setRFQs(response.data);
+      } catch (error) {
+        console.error('Failed to fetch filtered RFQs:', error);
+      }
+    };
+
+    if (token && filterData) {
+      fetchFilteredRFQs();
+    }
+  }, [token, filterData]);
+
+  return rfqs;
+}

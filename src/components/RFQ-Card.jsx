@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 
-const RFQCard = () => {
+const RFQCard = ({ rfq }) => {
   const { pathname } = useLocation();
 
   return (
@@ -38,7 +38,7 @@ const RFQCard = () => {
             <div className="flex gap-32 px-8">
               <h4 className="text-sm font-normal text-gray-500">Deadline:</h4>
               <span className="lg:text-sm text-xs font-normal text-black">
-                2024-1-01
+                {rfq.Deadline}
               </span>
             </div>
             <div className="flex gap-24 px-8">
@@ -46,7 +46,7 @@ const RFQCard = () => {
                 Delivery Date:
               </h4>
               <span className="md:text-sm text-xs font-normal text-black">
-                2023-12-01
+                {rfq.Delivery_Date}
               </span>
             </div>
             <div className="flex gap-36 px-8">

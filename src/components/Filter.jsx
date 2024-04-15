@@ -34,14 +34,16 @@ const Filter = ({ onFilterSubmit, resetToPage = 1 }) => {
   };
 
   const handleClear = () => {
-    setFilterData({
+    const clearedFilters = {
       company: "",
       rfq_date: "",
       deadline: "",
       delivery_date: "",
-      status: "", // single field to represent the status
-    });
-    handleFilterSubmit();
+      status: "",
+    };
+  
+    setFilterData(clearedFilters);
+    onFilterSubmit(clearedFilters, resetToPage); // Use the clearedFilters directly
   };
 
   return (
@@ -57,6 +59,7 @@ const Filter = ({ onFilterSubmit, resetToPage = 1 }) => {
             <input
               type="text"
               name="company"
+              value={filterData.company}
               className="border-2 border-gray-300 w-full mt-1 px-2 rounded-lg outline-none placeholder:text-sm"
               placeholder="ABC Company"
               onChange={handleInputChange}
@@ -69,7 +72,9 @@ const Filter = ({ onFilterSubmit, resetToPage = 1 }) => {
             <input
               type="date"
               name="rfq_date"
+              value={filterData.rfq_date}
               className="border-2 border-gray-300 text-gray-400 text-sm w-full mt-2 px-2 rounded-lg outline-none"
+              style={{ color: (filterData.rfq_date ? 'black' : 'gray') }}
               onChange={handleInputChange}
             />
           </div>
@@ -80,7 +85,9 @@ const Filter = ({ onFilterSubmit, resetToPage = 1 }) => {
             <input
               type="date"
               name="deadline"
+              value={filterData.deadline}
               className="border-2 border-gray-300 text-gray-400 text-sm w-full mt-2 px-2 rounded-lg outline-none"
+              style={{ color: (filterData.deadline ? 'black' : 'gray') }}
               onChange={handleInputChange}
             />
           </div>
@@ -91,7 +98,9 @@ const Filter = ({ onFilterSubmit, resetToPage = 1 }) => {
             <input
               type="date"
               name="delivery_date"
+              value={filterData.delivery_date}
               className="border-2 border-gray-300 text-gray-400 text-sm w-full mt-2 px-2 rounded-lg outline-none"
+              style={{ color: (filterData.delivery_date ? 'black' : 'gray') }}
               onChange={handleInputChange}
             />
           </div>
@@ -100,7 +109,7 @@ const Filter = ({ onFilterSubmit, resetToPage = 1 }) => {
         <div className="flex items-center justify-between">
           <h1 className="text-black text-lg font-normal">Opciones</h1>
           <p
-            className="text-xs font-normal text-gray-400 cursor-pointer"
+            className="text-xs font-normal text-gray-400 cursor-pointer underline"
             onClick={handleClear}
           >
             Clear

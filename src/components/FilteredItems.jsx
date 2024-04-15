@@ -7,7 +7,7 @@ const FilteredItems = ({ rfqs, currentPage, totalPages, onPageChange }) => {
       <h1 className="text-gray-900 font-semibold text-lg">Materials Requested</h1>
       <div className="flex flex-col gap-4">
         {rfqs && rfqs.map((rfq, index) => (
-          <FilterCard key={index} data={rfq} />
+          <FilterCard key={index} rfq={rfq} />
         ))}
         {rfqs.length === 0 && <p>No RFQs found.</p>}
       </div>

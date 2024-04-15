@@ -9,7 +9,7 @@ import { getUser, getUsers } from "../hooks/useUser";
 import { reserveRFQ, assignRFQ, releaseRFQ } from "../hooks/useRFQ";
 import { useAuth } from "../providers/AuthProvider";
 
-const FilterCard = ({ data }) => {
+const FilterCard = ({ rfq: rfq }) => {
   const { user } = useAuth();
   const handleView = (id) => {
     console.log("view", id);
@@ -22,7 +22,7 @@ const FilterCard = ({ data }) => {
   // Function to fetch users
   const users = getUsers(user);
 
-  const rfqAssignee = getUser(user.token, data.User_id);
+  const rfqAssignee = getUser(user.token, rfq.User_id);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -31,47 +31,47 @@ const FilterCard = ({ data }) => {
   };
 
   const handleReserve = () => {
-    console.log("reserve", data.RFQ_ID);
-    reserveRFQ(user.token, data.RFQ_ID);
+    console.log("reserve", rfq.RFQ_ID);
+    reserveRFQ(user.token, rfq.RFQ_ID);
   };
 
   const handleRelease = () => {
-    releaseRFQ(user.token, data.RFQ_ID);
+    releaseRFQ(user.token, rfq.RFQ_ID);
   };
 
   const handleAssignToUser = (userId) => {
-    assignRFQ(user.token, data.RFQ_ID, userId);
+    assignRFQ(user.token, rfq.RFQ_ID, userId);
     setIsDropdownOpen(false); // Close the dropdown after assignment
   };
 
   return (
     <div className="border-2 border-gray-200 p-4 rounded-lg">
       <div className="flex gap-4 items-center justify-between">
-        <Link to={"/rfq-manager"}>
+      <Link to={`/rfq-manager/${rfq.RFQ_ID}`} >
           <div className="flex gap-6">
             <div className="border-2 border-gray-200 p-2 rounded-md ">
               <img src={cardImg} alt="" className="w-24 h-16 object-cover" />
             </div>
             <div className="space-y-6">
               <h1 className="text-black font-normal text-lg">
-                {data.RFQ_Name}
+                {rfq.RFQ_Name}
               </h1>
               <div className="flex gap-8 items-center justify-center">
                 <p className="text-xs text-gray-400 pr-4 border-r-2 border-gray-300">
-                  Deadline: {data.Deadline}
+                  Deadline: {rfq.Deadline}
                 </p>
                 <p className="text-xs text-gray-400 pr-4 border-r-2 border-gray-300">
-                  Delivery Date: {data.Delivery_Date}
+                  Delivery Date: {rfq.Delivery_Date}
                 </p>
                 <p className="text-xs text-gray-400">
-                  RFQ Date: {data.RFQ_Date}
+                  RFQ Date: {rfq.RFQ_Date}
                 </p>
               </div>
             </div>
           </div>
         </Link>
         <div className="flex flex-col gap-2 max-w-fit justify-between items-center">
-          {!data.User_id && (
+          {!rfq.User_id && (
             <button
               className="bg-blue-700 w-32 py-2 rounded-md text-white text-xs uppercase whitespace-nowrap"
               onClick={handleReserve}
@@ -79,7 +79,7 @@ const FilterCard = ({ data }) => {
               Reservar
             </button>
           )}
-          {data.User_id && (
+          {rfq.User_id && (
             <div className="flex items-center gap-2">
               <p className="text-xs">
                 {rfqAssignee ? rfqAssignee.first_name : "loading..."}
@@ -93,11 +93,11 @@ const FilterCard = ({ data }) => {
           )}
           <button
             className="bg-blue-700 w-32 py-2 rounded-md text-white text-xs uppercase whitespace-nowrap"
-            onClick={() => handleView(data.RFQ_ID)}
+            onClick={() => handleView(rfq.RFQ_ID)}
           >
             Quick View
           </button>
-          {data.User_id && (
+          {rfq.User_id && (
             <button
               className="bg-blue-700 w-32 py-2 rounded-md text-white text-xs capitalize whitespace-nowrap"
               onClick={handleRelease}
@@ -105,7 +105,7 @@ const FilterCard = ({ data }) => {
               Release
             </button>
           )}
-          {!data.User_id && user.is_staff && (
+          {!rfq.User_id && user.is_staff && (
             <div className="relative">
               <button
                 className="bg-blue-700 w-32 py-2 rounded-md text-white text-xs capitalize whitespace-nowrap flex align-center justify-center"
@@ -134,7 +134,7 @@ const FilterCard = ({ data }) => {
         <View
           isOpen={isModalOpen}
           onClose={handleCloseModal}
-          id={data.RFQ_ID}
+          id={rfq.RFQ_ID}
         />
       </div>
     </div>

@@ -28,6 +28,10 @@ const Navbar = ({ isOpen, setIsOpen }) => {
     navigate("/login");
   };
 
+  const handleHome = () => {
+    navigate("/");
+  };
+
   const { pathname } = useLocation();
   let condition = pathname === "/" || pathname === "/rfq";
 
@@ -38,12 +42,10 @@ const Navbar = ({ isOpen, setIsOpen }) => {
           <div className="cursor-pointer" onClick={handleClick}>
             <GiHamburgerMenu size={20} />
           </div>
-          {pathname === "/" && <img src={Logo} alt="" className="h-8 object-cover" />}
-          {pathname === "/rfq" && <h2 className="font-semibold text-xl">RFQ</h2>}
-          {pathname === "/rfq-manager" && <h2 className="font-semibold text-xl">RFQ Manager</h2>}
+          <img src={Logo} alt="" className="h-8 object-cover cursor-pointer" onClick={handleHome} />
         </div>
         <div className="flex gap-4">
-          {condition && user && (
+          {true && user && (
             <div className="flex items-center gap-4">
               <IoMdNotificationsOutline size={20} />
               <AiOutlineMail size={20} />

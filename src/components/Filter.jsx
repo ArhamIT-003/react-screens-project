@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const Filter = ({ onFilterSubmit }) => {
+const Filter = ({ onFilterSubmit, resetToPage = 1 }) => {
   const [filterData, setFilterData] = useState({
     company: "",
     rfq_date: "",
@@ -30,7 +30,7 @@ const Filter = ({ onFilterSubmit }) => {
   const handleFilterSubmit = async () => {
     // Send a request to your API endpoint with the filterData
     console.log("Filter data:", filterData);
-    onFilterSubmit(filterData);
+    onFilterSubmit(filterData, resetToPage);
   };
 
   const handleClear = () => {

@@ -1,27 +1,22 @@
-import axios from "axios";
 import { useState } from "react";
-import { useAuth } from "../providers/AuthProvider";
 
-import { getFilteredRFQs } from "../hooks/useRFQ";
-
-const Filter = () => {
-  const { user } = useAuth();
+const Filter = ({ onFilterSubmit }) => {
   const [filterData, setFilterData] = useState({
-    Company_Name: "",
-    RFQ_Date: "",
-    Deadline: "",
-    Delivery_Date: "",
-    new_status: "", // single field to represent the status
+    company: "",
+    rfq_date: "",
+    deadline: "",
+    delivery_date: "",
+    status: "", // single field to represent the status
   });
 
   const handleInputChange = (e) => {
     const { name, value, type } = e.target;
     setFilterData((prevData) => {
-      // If the input is a radio button, we want to update the new_status field
+      // If the input is a radio button, we want to update the status field
       if (type === "radio" && e.target.checked) {
         return {
           ...prevData,
-          new_status: value,
+          status: value,
         };
       }
       // For other inputs, handle as before
@@ -32,27 +27,21 @@ const Filter = () => {
     });
   };
 
-  const handleFilterSubmit = () => {
+  const handleFilterSubmit = async () => {
     // Send a request to your API endpoint with the filterData
     console.log("Filter data:", filterData);
-    const filteredRFQs = getFilteredRFQs(user.token, filterData);
-    console.log("Filtered RFQs:", filteredRFQs)
+    onFilterSubmit(filterData);
   };
 
   const handleClear = () => {
     setFilterData({
-      Company_Name: "",
-      RFQ_Date: "",
-      Deadline: "",
-      Delivery_Date: "",
-      new_status: "", // single field to represent the status
+      company: "",
+      rfq_date: "",
+      deadline: "",
+      delivery_date: "",
+      status: "", // single field to represent the status
     });
-    reloadComponent();
-  };
-
-  const reloadComponent = () => {
-    // Reload the component here
-    window.location.reload();
+    handleFilterSubmit();
   };
 
   return (
@@ -67,7 +56,7 @@ const Filter = () => {
             </label>
             <input
               type="text"
-              name="Company_Name"
+              name="company"
               className="border-2 border-gray-300 w-full mt-1 px-2 rounded-lg outline-none placeholder:text-sm"
               placeholder="ABC Company"
               onChange={handleInputChange}
@@ -79,18 +68,18 @@ const Filter = () => {
             </label>
             <input
               type="date"
-              name="RFQ_Date"
+              name="rfq_date"
               className="border-2 border-gray-300 text-gray-400 text-sm w-full mt-2 px-2 rounded-lg outline-none"
               onChange={handleInputChange}
             />
           </div>
           <div className="m-1">
             <label htmlFor="" className="text-xs text-gray-600">
-              Deadline Date
+              Deadline
             </label>
             <input
               type="date"
-              name="Deadline"
+              name="deadline"
               className="border-2 border-gray-300 text-gray-400 text-sm w-full mt-2 px-2 rounded-lg outline-none"
               onChange={handleInputChange}
             />
@@ -101,7 +90,7 @@ const Filter = () => {
             </label>
             <input
               type="date"
-              name="Delivery_Date"
+              name="delivery_date"
               className="border-2 border-gray-300 text-gray-400 text-sm w-full mt-2 px-2 rounded-lg outline-none"
               onChange={handleInputChange}
             />
@@ -122,9 +111,9 @@ const Filter = () => {
           <div className="flex items-center gap-10">
             <input
               type="radio"
-              name="new_status"
+              name="status"
               value="new"
-              checked={filterData.new_status === "new"}
+              checked={filterData.status === "new"}
               onChange={handleInputChange}
               className="w-4 h-4"
               id="new"
@@ -137,9 +126,9 @@ const Filter = () => {
           <div className="flex items-center gap-10">
             <input
               type="radio"
-              name="new_status"
+              name="status"
               value="reserved"
-              checked={filterData.new_status === "reserved"}
+              checked={filterData.status === "reserved"}
               onChange={handleInputChange}
               className="w-4 h-4"
               id="reserved"
@@ -152,9 +141,9 @@ const Filter = () => {
           <div className="flex items-center gap-10">
             <input
               type="radio"
-              name="new_status"
+              name="status"
               value="sold"
-              checked={filterData.new_status === "sold"}
+              checked={filterData.status === "sold"}
               onChange={handleInputChange}
               className="w-4 h-4"
               id="sold"
@@ -167,9 +156,9 @@ const Filter = () => {
           <div className="flex items-center gap-10">
             <input
               type="radio"
-              name="new_status"
+              name="status"
               value="offered"
-              checked={filterData.new_status === "offered"}
+              checked={filterData.status === "offered"}
               onChange={handleInputChange}
               className="w-4 h-4"
               id="offered"

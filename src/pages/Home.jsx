@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Filter from "../components/Filter";
 import FilteredItems from "../components/FilteredItems";
-import { filterRFQs } from "../api/filter";
+import { filterRFQs } from "../api/rfq";
 import { useAuth } from "../providers/AuthProvider";
 
 const Home = () => {

@@ -108,10 +108,10 @@ const FilterCard = ({ data }) => {
           {!data.User_id && user.is_staff && (
             <div className="relative">
               <button
-                className="bg-blue-700 w-32 py-2 rounded-md text-white text-xs capitalize whitespace-nowrap flex items-center justify-between"
+                className="bg-blue-700 w-32 py-2 rounded-md text-white text-xs capitalize whitespace-nowrap flex align-center justify-center"
                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
               >
-                Assign
+                ASSIGN
                 <img src={DropdownArrow} alt="Dropdown" className="ml-2" />
               </button>
               {isDropdownOpen && (

@@ -12,3 +12,13 @@ export const filterRFQs = async (token, data, page=1, n=3) => {
     }
   );
 }
+
+export const getRFQ = async (token, id) => {
+  return await axios.get(`${API_URL}/rfqs/${id}/`,
+    {
+      headers: {
+        Authorization: `Token ${token}`
+      }
+    }
+  );
+}

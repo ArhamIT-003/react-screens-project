@@ -47,7 +47,7 @@ const FilterCard = ({ rfq: rfq }) => {
   return (
     <div className="border-2 border-gray-200 p-4 rounded-lg">
       <div className="flex gap-4 items-center justify-between">
-      <Link to={`/rfq-manager/${rfq.RFQ_ID}`} >
+      <Link to={`/rfq/${rfq.RFQ_ID}`} >
           <div className="flex gap-6">
             <div className="border-2 border-gray-200 p-2 rounded-md ">
               <img src={cardImg} alt="" className="w-24 h-16 object-cover" />

@@ -47,7 +47,7 @@ const App = () => {
               }
             />
             <Route
-              path="/rfq-manager/:rfqId"
+              path="/rfq/:rfqId"
               element={
                 <ProtectedRoute>
                   <RFQManager />

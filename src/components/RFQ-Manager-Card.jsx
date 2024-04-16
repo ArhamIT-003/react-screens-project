@@ -4,7 +4,7 @@ const RFQManagerCard = ({ data }) => {
       <div className="flex justify-between">
         <div className="flex-[10]">
           <h1 className="text-balance text-lg font-medium tracking-wider text-black">
-            LINER,WEAR,NONMTL,PL,CARB
+            {data.Material_Description}
           </h1>
           <div className="w-1/2 flex gap-16 items-center">
             <span className="text-xs text-gray-500 flex items-center">
@@ -16,7 +16,7 @@ const RFQManagerCard = ({ data }) => {
                   data.port == "pending" && "bg-yellow-500"
                 } rounded-full inline-block ml-4`}
               ></span>
-              <span className="text-black text-xs ml-2">{data.partNumber}</span>
+              <span className="text-black text-xs ml-2">{data.Part_Number}</span>
             </span>
             <span className="text-xs text-gray-500">
               Marca: <span className="text-black text-xs ml-5">Siemens</span>
@@ -31,12 +31,12 @@ const RFQManagerCard = ({ data }) => {
           <div className="w-1/2 flex items-center">
             <span className="text-xs text-gray-500">
               Cantidad Solicitada:
-              <span className="text-black text-xs ml-4">10</span>
+              <span className="text-black text-xs ml-4">{data.Quantity_Required}</span>
             </span>
           </div>
           {/*description*/}
           <div className="mt-5">
-            <p className="text-xs text-gray-500">{data.description?.title}</p>
+            <p className="text-xs text-gray-500">{data.notes}</p>
             <p className="text-xs text-gray-500">
               {data.description?.shortName}
             </p>
